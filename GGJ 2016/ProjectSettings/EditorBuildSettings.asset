@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scene/GGJScene.unity
+  - enabled: 1
+    path: Assets/Scene/boookScene.unity
+  - enabled: 1
+    path: Assets/Scene/mainGameScene.unity
+  - enabled: 0
+    path: Assets/Scene/ChrisGameSceneLevel.unity
+  - enabled: 1
+    path: Assets/Scene/EndScene.unity
