@@ -49,6 +49,7 @@ public class SpellCombinationScript : MonoBehaviour
     //Scream Spell
     public GameObject scream;
     public AudioClip screaming;
+	public bool isScreaming;
     //Scream Spell + 
     private bool screamDamage;
     private Collider coll;
@@ -56,7 +57,7 @@ public class SpellCombinationScript : MonoBehaviour
     //Smoke Spell
     public GameObject smoke;
     //private bool smokeActive = false;
-    public float pooTimer = 2;
+    public float poolTimer = 2;
 
     //Flashed Spell Update
     public BloomAndFlares BandF;
@@ -65,7 +66,7 @@ public class SpellCombinationScript : MonoBehaviour
 	public bool flashBool = false;
 	public AudioClip flashSound;
 
-    //drunkMathew var.
+    //drunk var.
     public float drunkTimer;
 
     //QuakeState var.
@@ -84,14 +85,14 @@ public class SpellCombinationScript : MonoBehaviour
 
 	public InteractScript interactRune;
 
-    //Spell Compelete
+    //Spell Complete
     private int castingLV;
 	public bool endingAble = false;
 
     // Use this for initialization
     void Start()
     {
-
+		
         //Heart Spell
         HeartParticles.SetActive(false);
 
@@ -108,12 +109,19 @@ public class SpellCombinationScript : MonoBehaviour
         BandF = fpCamera.GetComponent<BloomAndFlares>();
         BandF.bloomIntensity = 0;
 
-        //drunkMathew setup
+        //drunk setup
         drunkTimer = 3;
         fpCamera.GetComponent<MotionBlur>().enabled = false;
 
         //Psy Spell
         psyLimit = 5;
+
+		isScreaming = false;
+
+		endingAble = false;
+
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 
     }
 
@@ -288,7 +296,7 @@ public class SpellCombinationScript : MonoBehaviour
             shake = 0;
         }
 
-        //drunkMathew Spell Eff.
+        //drunk Spell Eff.
         if (fpCamera.GetComponent<MotionBlur>().enabled == true)
         {
             drunkTimer -= Time.deltaTime;
@@ -302,13 +310,13 @@ public class SpellCombinationScript : MonoBehaviour
 
         //smoke Spell Eff.
         if (smoke.active == true) {
-            pooTimer -= Time.deltaTime;
+            poolTimer -= Time.deltaTime;
         }
 
-        if (pooTimer <= 0)
+		if ( poolTimer <= 0)
         {
             smoke.SetActive(false);
-            pooTimer = 2;
+            poolTimer = 2;
         }
 
         //Screaming Spell Eff.+
@@ -325,6 +333,8 @@ public class SpellCombinationScript : MonoBehaviour
                 }
             }
         }
+
+
 
         //casting spell
         if (Input.GetKeyDown(KeyCode.C))
@@ -356,6 +366,10 @@ public class SpellCombinationScript : MonoBehaviour
             { castingLV = 6; }
         }
 
+		if (interactRune.isReady == true) {
+			endingAble = true;
+		}
+
     }
 
 
@@ -378,12 +392,12 @@ public class SpellCombinationScript : MonoBehaviour
         } else if (spellCombinations[0] == 2 && spellCombinations[1] == 1 && spellCombinations[2] == 3) {
             Screaming(); //Check
         } else if (spellCombinations[0] == 1 && spellCombinations[1] == 2 && spellCombinations[2] == 1) {
-            drunkMathew(); //Check
+            drunk(); //Check
         } else if (spellCombinations[0] == 1 && spellCombinations[1] == 1 && spellCombinations[2] == 1) {
             quakeState(); //Check
         } else if (spellCombinations[0] == 3 && spellCombinations[1] == 1 && spellCombinations[2] == 3) {
             psySpell();
-		} else if (spellCombinations[0] == 3 && spellCombinations[1] == 1 && spellCombinations[2] == 2) {
+		} else if (spellCombinations[0] == 3 && spellCombinations[1] == 1 && spellCombinations[2] == 2 && endingAble == true) {
 			enableEnd();
 		}
         else
@@ -395,7 +409,7 @@ public class SpellCombinationScript : MonoBehaviour
     //Paralysis Spell
     void paralysis()
     {
-        Debug.Log("Your Frozen Bitch");
+        Debug.Log("Your Frozen");
         player.GetComponent<FirstPersonController>().enabled = false;
         isFrozen = true;
     }
@@ -447,10 +461,16 @@ public class SpellCombinationScript : MonoBehaviour
     //Scream Spell
     void Screaming()
     {
+		isScreaming = true;
+
+		//scream.SetActive (true);
         screamDamage = true;
         GetComponent<AudioSource>().PlayOneShot(screaming);
         Debug.Log("AAAAAAAGGGGGGHHHHHHHHHHHH!!!!!!!!!!");
-    }
+		if (isScreaming = true) {
+
+			isScreaming = false;
+		}   }
 
     //smoke Spell
     void smokebomb()
@@ -459,7 +479,7 @@ public class SpellCombinationScript : MonoBehaviour
     }
 
     //drunk Spell
-    void drunkMathew()
+    void drunk()
     {
         fpCamera.GetComponent<MotionBlur>().enabled = true;
 
@@ -485,7 +505,7 @@ public class SpellCombinationScript : MonoBehaviour
     {
 		soundObj.GetComponent<AudioSource> ().PlayOneShot (spellSound);
 
-        drunkMathew();
+        drunk();
         quakeState();
         psySpell();
     }
@@ -503,6 +523,9 @@ public class SpellCombinationScript : MonoBehaviour
 		{
 			Application.LoadLevel (3);
 			Debug.Log("Ending is near");
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+
 		}
 	}
 

@@ -5,13 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/GGJScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/boookScene.unity
-  - enabled: 1
-    path: Assets/Scene/mainGameScene.unity
   - enabled: 0
     path: Assets/Scene/ChrisGameSceneLevel.unity
+  - enabled: 1
+    path: Assets/Scene/StartScene.unity
+  - enabled: 1
+    path: Assets/Scene/storyScene.unity
+  - enabled: 1
+    path: Assets/Scene/mainGameScene.unity
   - enabled: 1
     path: Assets/Scene/EndScene.unity

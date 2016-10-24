@@ -12,6 +12,8 @@ TagManager:
   - LightTrig
   - QuakeTrig
   - End
+  - Fire
+  - ScreamTrig
   layers:
   - Default
   - TransparentFX

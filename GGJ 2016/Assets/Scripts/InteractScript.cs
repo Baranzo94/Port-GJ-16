@@ -24,6 +24,8 @@ public class InteractScript : MonoBehaviour {
 
 	public int sceneToChangeTo;
 
+	public bool isReady;
+
 
 
 
@@ -34,6 +36,7 @@ public class InteractScript : MonoBehaviour {
 		Rune1.SetActive (false);
 		Rune2.SetActive  (false);
 		Rune3.SetActive  (false);
+
 
 
 	}
@@ -49,6 +52,9 @@ public class InteractScript : MonoBehaviour {
 			dialogue.text = "";
 			dialogueTimer = 2;
 		}
+
+
+
 	
 	}
 
@@ -57,18 +63,26 @@ public class InteractScript : MonoBehaviour {
 		//interactObject = other.gameObject;
 		if (other.gameObject.tag == "HeartTrig") {
 			interactObject = other.gameObject;
+			dialogue.text = "Maybe show your pet a sign of affection";
+
 		}
 
 		if (other.gameObject.tag == "LightTrig") {
 			interactObject = other.gameObject;
+			dialogue.text = "Maybe some light would help here";
+
 		}
 
-		if (other.gameObject.tag == "FlashTrig") {
+		if (other.gameObject.tag == "ScreamTrig") {
 			interactObject = other.gameObject;
+			dialogue.text = "A loud noise could break this";
+
 		}
 
 		if (other.gameObject.tag == "QuakeTrig") {
 			interactObject = other.gameObject;
+			dialogue.text = "Need to shake things up here";
+
 		}
 
 		if (other.gameObject.tag == "Rune1") {
@@ -107,24 +121,28 @@ public class InteractScript : MonoBehaviour {
 	void OnTriggerStay(Collider other)
 	{
 		if(other.gameObject.tag == "HeartTrig" && spellScript.heartActive == true) {
-			Debug.Log ("LOVE YOU !");
+			//Debug.Log ("LOVE YOU !");
 			Destroy (interactObject);
 		}
 
 		if(other.gameObject.tag == "LightTrig" && spellScript.isAlight == true) {
-			Debug.Log ("I CAST THEE OUT");
+			//Debug.Log ("I CAST THEE OUT");
 			Destroy (interactObject);
 		}
 
 		if (other.gameObject.tag == "FlashTrig" && spellScript.flash1stEffectTimer < 1) {
-			Debug.Log ("Lighting!!!");
+			//Debug.Log ("Lighting!!!");
 			Destroy (interactObject);
+		}
+
+		if (other.gameObject.tag == "ScreamTrig" && spellScript.isScreaming == true) {
+			Destroy(interactObject);
 		}
 
 		if (other.gameObject.tag == "QuakeTrig" && spellScript.shake > 0) {
 			RuneTwo.SetActive (true);
 			Destroy (interactObject);
-			Debug.Log ("Shake!!!");
+			//Debug.Log ("Shake!!!");
 		}
 		//dialogue.text = "Press E to Interact";
 
@@ -136,7 +154,7 @@ public class InteractScript : MonoBehaviour {
 				Destroy (interactObject);
 				dialogue.text = "Rune 1 unlocked";
 				isDialogue = false;
-				RuneTwo.SetActive (true);
+				//RuneTwo.SetActive (true);
 
 
 
@@ -157,7 +175,7 @@ public class InteractScript : MonoBehaviour {
 			if (other.gameObject.tag == "Rune3") {
 				Debug.Log ("Beep3");
 				Rune3.SetActive (true);
-
+				isReady = true;
 				Destroy (interactObject);
 				dialogue.text = "Rune 3 unlocked";
 				isDialogue = false;
@@ -170,7 +188,7 @@ public class InteractScript : MonoBehaviour {
 	void OnTriggerExit(Collider other)
 	{
 		interactObject = null;
-		Debug.Log ("Goodbye");
+		//Debug.Log ("Goodbye");
 		//dialogue.text = "";
 	}
 
